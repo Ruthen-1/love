@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="افتحني إذا احتجتني 🤍 - هدية رقمية تفاعلية">
+    <title>افتحني إذا احتجتني 🤍</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="screen active">
+        <div class="splash-content">
+            <div class="floating-elements">
+                <i class="fas fa-heart float-element" style="top: 10%; right: 10%; animation-delay: 0s;"></i>
+                <i class="fas fa-star float-element" style="top: 20%; left: 15%; animation-delay: 1s;"></i>
+                <i class="fas fa-leaf float-element" style="bottom: 20%; right: 15%; animation-delay: 2s;"></i>
+                <i class="fas fa-heart float-element" style="bottom: 10%; left: 10%; animation-delay: 0.5s;"></i>
+                <i class="fas fa-star float-element" style="top: 40%; right: 20%; animation-delay: 1.5s;"></i>
+                <i class="fas fa-leaf float-element" style="bottom: 30%; left: 20%; animation-delay: 2.5s;"></i>
+            </div>
+            <div class="splash-text">
+                <h1 class="fade-in-text delay-1">هذا المكان صُنع لك...</h1>
+                <p class="fade-in-text delay-2">إذا ضاقت بك الدنيا،</p>
+                <p class="fade-in-text delay-3">إذا احتجت كلمة،</p>
+                <p class="fade-in-text delay-4">إذا اشتقت لشعور جميل...</p>
+                <p class="fade-in-text delay-5 splash-highlight">افتح الظرف المناسب 🤍</p>
+            </div>
+            <button class="start-btn glass-btn delay-6" onclick="showHome()">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>ابدأ</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen">
+        <header class="glass-header">
+            <div class="header-content">
+                <h1 class="app-title">افتحني إذا احتجتني 🤍</h1>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="toggleDarkMode()" id="darkModeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="icon-btn" onclick="toggleSound()" id="soundToggle">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <button class="icon-btn" onclick="navigateTo('favorites')">
+                        <i class="fas fa-bookmark"></i>
+                        <span class="badge" id="favCount">0</span>
+                    </button>
+                </div>
+            </div>
+            <div class="search-container">
+                <div class="search-box glass-card">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث في الرسائل..." oninput="searchMessages()">
+                    <button class="clear-search" id="clearSearch" onclick="clearSearch()" style="display:none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="stats-bar glass-card">
+                <div class="stat-item">
+                    <i class="fas fa-envelope-open"></i>
+                    <span>تم فتح <strong id="openedCount">0</strong> ظرف</span>
+                </div>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card glass-card blue" onclick="showEnvelopes('blue')">
+                    <div class="category-icon">💙</div>
+                    <h2>إذا كان يومك ثقيل</h2>
+                    <p>للحزن، التعب، الأيام الصعبة</p>
+                    <div class="category-count" id="blueCount">0</div>
+                </div>
+
+                <div class="category-card glass-card green" onclick="showEnvelopes('green')">
+                    <div class="category-icon">💚</div>
+                    <h2>إذا ودك تهدأ</h2>
+                    <p>للراحة، الامتنان، البدايات</p>
+                    <div class="category-count" id="greenCount">0</div>
+                </div>
+
+                <div class="category-card glass-card pink" onclick="showEnvelopes('pink')">
+                    <div class="category-icon">❤️</div>
+                    <h2>إذا اشتقت</h2>
+                    <p>للحب، الاشتياق، الذكريات</p>
+                    <div class="category-count" id="pinkCount">0</div>
+                </div>
+
+                <div class="category-card glass-card orange" onclick="showEnvelopes('orange')">
+                    <div class="category-icon">🧡</div>
+                    <h2>إذا احتجت دفعة قوة</h2>
+                    <p>للحماس، الإنجاز، التفاؤل</p>
+                    <div class="category-count" id="orangeCount">0</div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav glass-footer">
+            <button class="nav-btn active" onclick="navigateTo('home')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('favorites')">
+                <i class="fas fa-heart"></i>
+                <span>المفضلة</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('memories')">
+                <i class="fas fa-history"></i>
+                <span>ذكرياتي</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('about')">
+                <i class="fas fa-info-circle"></i>
+                <span>عن الهدية</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Envelopes Screen -->
+    <div id="envelopesScreen" class="screen">
+        <div class="screen-header glass-header">
+            <button class="icon-btn back-btn" onclick="showHome()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <h2 id="categoryTitle"></h2>
+            <div class="color-indicator" id="categoryColor"></div>
+        </div>
+        <div class="envelopes-grid" id="envelopesContainer"></div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-overlay" onclick="closeMessage()"></div>
+        <div class="modal-content glass-card">
+            <div class="envelope-animation" id="envelopeAnimation">
+                <div class="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-body"></div>
+                    <div class="letter">
+                        <div class="letter-content">
+                            <h3 id="messageTitle"></h3>
+                            <p id="messageContent"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="message-actions">
+                <button class="action-btn glass-btn" onclick="toggleFavorite(currentMessage?.id)">
+                    <i class="fas fa-bookmark"></i>
+                    <span>حفظ</span>
+                </button>
+                <button class="action-btn glass-btn" onclick="shareMessage()">
+                    <i class="fas fa-share-alt"></i>
+                    <span>مشاركة</span>
+                </button>
+                <button class="action-btn glass-btn" onclick="closeMessage()">
+                    <i class="fas fa-times"></i>
+                    <span>إغلاق</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Screen -->
+    <div id="favoritesScreen" class="screen">
+        <div class="screen-header glass-header">
+            <button class="icon-btn back-btn" onclick="navigateTo('home')">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <h2>المفضلة 🤍</h2>
+        </div>
+        <div class="favorites-container" id="favoritesContainer">
+            <div class="empty-state" id="emptyFavorites">
+                <i class="fas fa-bookmark"></i>
+                <p>لا توجد رسائل مفضلة بعد</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memories Screen -->
+    <div id="memoriesScreen" class="screen">
+        <div class="screen-header glass-header">
+            <button class="icon-btn back-btn" onclick="navigateTo('home')">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <h2>ذكرياتي 📝</h2>
+        </div>
+        <div class="memories-container" id="memoriesContainer">
+            <div class="empty-state" id="emptyMemories">
+                <i class="fas fa-history"></i>
+                <p>لم تفتح أي رسالة بعد</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Screen -->
+    <div id="aboutScreen" class="screen">
+        <div class="screen-header glass-header">
+            <button class="icon-btn back-btn" onclick="navigateTo('home')">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <h2>عن الهدية 🎁</h2>
+        </div>
+        <div class="about-content glass-card">
+            <div class="about-icon">🤍</div>
+            <h2>افتحني إذا احتجتني</h2>
+            <p class="about-description">
+                هذه الهدية صُنعت خصيصاً لك، لتكون ملاذاً آمناً في كل الأوقات.
+            </p>
+            <p class="about-description">
+                اختر ما يناسب شعورك، واقرأ ما كتب لك بعناية وحب.
+            </p>
+            <div class="about-features">
+                <div class="feature-item">
+                    <i class="fas fa-heart"></i>
+                    <span>رسائل مكتوبة بعناية</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-palette"></i>
+                    <span>ألوان تناسب كل شعور</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bookmark"></i>
+                    <span>احفظ رسائلك المفضلة</span>
+                </div>
+            </div>
+            <p class="about-footer">مع الحب 🤍</p>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast glass-card"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
