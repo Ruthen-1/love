@@ -57,14 +57,64 @@ body {
 .env-card h3 { font-size: 15px; margin-bottom: 5px; }
 .env-card p { font-size: 12px; opacity: 0.8; }
 
-/* النافذة المنبثقة */
+/* النافذة المنبثقة - النص كامل والزر تحت */
 .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; }
 .modal.active { display: flex; align-items: center; justify-content: center; }
 .modal-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); cursor: pointer; }
-.modal-box { position: relative; z-index: 1; background: white; border-radius: 20px; padding: 30px 25px; width: 90%; max-width: 450px; max-height: 80vh; overflow-y: auto; }
-.modal-box h3 { color: #1a1a2e; text-align: center; margin-bottom: 20px; font-size: 20px; }
-.modal-box p { color: #333; line-height: 2.2; font-size: 16px; white-space: pre-line; text-align: right; }
-.close-msg-btn { display: block; margin: 25px auto 0; background: #f0f0f0; border: none; padding: 12px 40px; border-radius: 25px; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 14px; color: #555; }
+
+.modal-box { 
+    position: relative; 
+    z-index: 1; 
+    background: white; 
+    border-radius: 20px; 
+    padding: 25px 20px 15px 20px; 
+    width: 92%; 
+    max-width: 500px; 
+    height: 85vh; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.modal-box h3 { 
+    color: #1a1a2e; 
+    text-align: center; 
+    margin-bottom: 15px; 
+    font-size: 18px; 
+    flex-shrink: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-box p { 
+    color: #333; 
+    line-height: 2; 
+    font-size: 15px; 
+    white-space: pre-line; 
+    text-align: right; 
+    flex: 1; 
+    overflow-y: auto; 
+    padding: 15px 5px;
+    margin: 0;
+}
+
+.close-msg-btn { 
+    display: block; 
+    margin: 10px auto 0; 
+    background: #f0f0f0; 
+    border: none; 
+    padding: 12px 40px; 
+    border-radius: 25px; 
+    cursor: pointer; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 15px; 
+    color: #555; 
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.close-msg-btn:active {
+    background: #e0e0e0;
+}
 
 /* القوائم */
 .list-container { padding: 15px; }
