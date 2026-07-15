@@ -16,19 +16,19 @@ fetch('messages.json')
 
 function getFallback() {
     var msgs = [];
-    var colors = ['blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue'];
-    var greens = ['green','green','green','green','green','green','green','green','green','green','green','green'];
-    var pinks = ['pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink'];
-    var oranges = ['orange','orange','orange','orange','orange','orange','orange','orange','orange','orange','orange','orange'];
+    var allColors = [];
     
-    var all = colors.concat(greens).concat(pinks).concat(oranges);
+    for (var i = 0; i < 20; i++) allColors.push('blue');
+    for (var i = 0; i < 12; i++) allColors.push('green');
+    for (var i = 0; i < 20; i++) allColors.push('pink');
+    for (var i = 0; i < 12; i++) allColors.push('orange');
     
-    for (var i = 0; i < all.length; i++) {
+    for (var i = 0; i < allColors.length; i++) {
         msgs.push({
             id: i+1,
-            color: all[i],
+            color: allColors[i],
             title: 'رسالة ' + (i+1),
-            content: 'هذه رسالة احتياطية. تأكد من وجود ملف messages.json في نفس المجلد. 🤍',
+            content: 'هذه رسالة احتياطية. تأكد من وجود ملف messages.json 🤍',
             number: i+1
         });
     }
@@ -79,7 +79,34 @@ function openMsg(id) {
     
     document.getElementById('msgTitle').textContent = msg.title;
     document.getElementById('msgBody').textContent = msg.content;
+    
+    var isFav = favorites.indexOf(id) !== -1;
+    var btnsDiv = document.querySelector('.modal-btns');
+    btnsDiv.innerHTML = 
+        '<button onclick="toggleFav(' + id + ')" style="background:#fff; border:1px solid #ddd;">' +
+        (isFav ? '❤️' : '🤍') +
+        '</button>' +
+        '<button onclick="closeMsg()">إغلاق ✕</button>';
+    
     document.getElementById('msgModal').classList.add('active');
+}
+
+function toggleFav(id) {
+    var idx = favorites.indexOf(id);
+    if (idx === -1) {
+        favorites.push(id);
+    } else {
+        favorites.splice(idx, 1);
+    }
+    localStorage.setItem('fv', JSON.stringify(favorites));
+    
+    var isFav = favorites.indexOf(id) !== -1;
+    var btnsDiv = document.querySelector('.modal-btns');
+    btnsDiv.innerHTML = 
+        '<button onclick="toggleFav(' + id + ')" style="background:#fff; border:1px solid #ddd;">' +
+        (isFav ? '❤️' : '🤍') +
+        '</button>' +
+        '<button onclick="closeMsg()">إغلاق ✕</button>';
 }
 
 function closeMsg() {
