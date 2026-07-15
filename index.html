@@ -2,118 +2,103 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>افتحني إذا احتجتني 🤍</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=El+Messiri:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- شاشة البداية -->
-    <div id="splashScreen" class="screen active">
-        <div class="splash-content">
-            <div class="splash-text">
-                <h1>هذا المكان صُنع لك...</h1>
-                <p>إذا ضاقت بك الدنيا،</p>
-                <p>إذا احتجت كلمة،</p>
-                <p>إذا اشتقت لشعور جميل...</p>
-                <p class="splash-highlight">افتح الظرف المناسب 🤍</p>
-            </div>
-            <button class="start-btn" onclick="showHome()">ابدأ</button>
-        </div>
+    <!-- البداية -->
+    <div id="splash" class="page active">
+        <h1>هذا المكان صُنع لك...</h1>
+        <p>إذا ضاقت بك الدنيا</p>
+        <p>إذا احتجت كلمة</p>
+        <p>إذا اشتقت لشعور جميل</p>
+        <p class="bold">افتح الظرف المناسب 🤍</p>
+        <button onclick="goHome()">ابدأ</button>
     </div>
 
     <!-- الرئيسية -->
-    <div id="homeScreen" class="screen">
-        <header class="header">
-            <h1>افتحني إذا احتجتني 🤍</h1>
-            <div class="header-btns">
-                <button onclick="toggleDarkMode()" class="icon-btn"><i class="fas fa-moon"></i></button>
-                <button onclick="toggleSound()" class="icon-btn"><i class="fas fa-volume-up"></i></button>
-            </div>
-        </header>
-
-        <div class="categories">
-            <div class="cat-card blue" onclick="showEnvelopes('blue')">
-                <span class="cat-icon">💙</span>
-                <h2>إذا كان يومك ثقيل</h2>
+    <div id="home" class="page">
+        <div class="topbar">
+            <h2>افتحني إذا احتجتني 🤍</h2>
+        </div>
+        
+        <div class="grid">
+            <div class="card blue" onclick="goEnvelopes('blue')">
+                <span>💙</span>
+                <h3>إذا كان يومك ثقيل</h3>
                 <p>للحزن والتعب</p>
-                <span class="cat-count" id="blueCount">0</span>
             </div>
-            <div class="cat-card green" onclick="showEnvelopes('green')">
-                <span class="cat-icon">💚</span>
-                <h2>إذا ودك تهدأ</h2>
+            <div class="card green" onclick="goEnvelopes('green')">
+                <span>💚</span>
+                <h3>إذا ودك تهدأ</h3>
                 <p>للراحة والامتنان</p>
-                <span class="cat-count" id="greenCount">0</span>
             </div>
-            <div class="cat-card pink" onclick="showEnvelopes('pink')">
-                <span class="cat-icon">💗</span>
-                <h2>إذا اشتقت</h2>
+            <div class="card pink" onclick="goEnvelopes('pink')">
+                <span>💗</span>
+                <h3>إذا اشتقت</h3>
                 <p>للحب والذكريات</p>
-                <span class="cat-count" id="pinkCount">0</span>
             </div>
-            <div class="cat-card orange" onclick="showEnvelopes('orange')">
-                <span class="cat-icon">🧡</span>
-                <h2>إذا احتجت قوة</h2>
+            <div class="card orange" onclick="goEnvelopes('orange')">
+                <span>🧡</span>
+                <h3>إذا احتجت قوة</h3>
                 <p>للحماس والإنجاز</p>
-                <span class="cat-count" id="orangeCount">0</span>
             </div>
         </div>
 
-        <nav class="bottom-nav">
-            <button onclick="navigateTo('home')" class="nav-btn active"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-            <button onclick="navigateTo('favorites')" class="nav-btn"><i class="fas fa-heart"></i><span>المفضلة</span></button>
-            <button onclick="navigateTo('about')" class="nav-btn"><i class="fas fa-info-circle"></i><span>عن الهدية</span></button>
-        </nav>
+        <div class="navbar">
+            <button onclick="goHome()" class="active"><i class="fas fa-home"></i></button>
+            <button onclick="goFavorites()"><i class="fas fa-heart"></i></button>
+            <button onclick="goAbout()"><i class="fas fa-info-circle"></i></button>
+        </div>
     </div>
 
     <!-- الظروف -->
-    <div id="envelopesScreen" class="screen">
-        <div class="screen-top">
-            <button onclick="showHome()" class="back-btn"><i class="fas fa-arrow-right"></i></button>
-            <h2 id="categoryTitle"></h2>
+    <div id="envelopes" class="page">
+        <div class="topbar">
+            <button onclick="goHome()"><i class="fas fa-arrow-right"></i></button>
+            <h2 id="catTitle"></h2>
         </div>
-        <div class="envelopes-grid" id="envelopesContainer"></div>
-    </div>
-
-    <!-- نافذة الرسالة -->
-    <div id="messageModal" class="modal">
-        <div class="modal-bg" onclick="closeMessage()"></div>
-        <div class="modal-box">
-            <h3 id="messageTitle"></h3>
-            <p id="messageContent"></p>
-            <button onclick="closeMessage()" class="close-msg-btn">إغلاق ✕</button>
-        </div>
+        <div class="grid" id="envGrid"></div>
     </div>
 
     <!-- المفضلة -->
-    <div id="favoritesScreen" class="screen">
-        <div class="screen-top">
-            <button onclick="navigateTo('home')" class="back-btn"><i class="fas fa-arrow-right"></i></button>
+    <div id="favorites" class="page">
+        <div class="topbar">
+            <button onclick="goHome()"><i class="fas fa-arrow-right"></i></button>
             <h2>المفضلة 🤍</h2>
         </div>
-        <div id="favoritesContainer" class="list-container"></div>
+        <div id="favList" class="list"></div>
     </div>
 
     <!-- عن الهدية -->
-    <div id="aboutScreen" class="screen">
-        <div class="screen-top">
-            <button onclick="navigateTo('home')" class="back-btn"><i class="fas fa-arrow-right"></i></button>
+    <div id="about" class="page">
+        <div class="topbar">
+            <button onclick="goHome()"><i class="fas fa-arrow-right"></i></button>
             <h2>عن الهدية 🎁</h2>
         </div>
         <div class="about-box">
-            <h2>🤍</h2>
-            <p>هذه الهدية صُنعت خصيصاً لك.</p>
-            <p>اختر ما يناسب شعورك، واقرأ ما كتب لك بعناية وحب.</p>
-            <p class="about-love">مع الحب 🤍</p>
+            <p style="font-size:50px">🤍</p>
+            <p>هذه الهدية صُنعت خصيصاً لك</p>
+            <p>اختر ما يناسب شعورك</p>
+            <p>واقرأ ما كتب لك بعناية وحب</p>
+            <p class="bold">مع الحب 🤍</p>
         </div>
     </div>
 
-    <div id="toast" class="toast"></div>
+    <!-- نافذة الرسالة -->
+    <div id="msgModal" class="modal">
+        <div class="modal-bg" onclick="closeMsg()"></div>
+        <div class="modal-inner">
+            <h3 id="msgTitle"></h3>
+            <div id="msgBody"></div>
+            <button onclick="closeMsg()">إغلاق ✕</button>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
