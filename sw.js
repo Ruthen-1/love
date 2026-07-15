@@ -1,11 +1,11 @@
 const CACHE_NAME = 'open-me-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/messages.json',
-  '/manifest.json'
+  '',
+  'index.html',
+  'style.css',
+  'script.js',
+  'messages.json',
+  'manifest.json'
 ];
 
 self.addEventListener('install', event => {
