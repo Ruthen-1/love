@@ -334,7 +334,6 @@ body {
     font-size: 14px;
 }
 
-/* Stats Bar */
 .stats-bar {
     padding: 15px 20px;
     margin: 15px 20px;
@@ -347,7 +346,6 @@ body {
     margin-left: 8px;
 }
 
-/* Categories Grid */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -421,7 +419,6 @@ body {
     font-weight: bold;
 }
 
-/* Bottom Navigation */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -575,7 +572,7 @@ body {
     position: relative;
     width: 90%;
     max-width: 400px;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
     padding: 30px;
     z-index: 1;
@@ -587,7 +584,6 @@ body {
     to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* Envelope Animation */
 .envelope-animation {
     margin-bottom: 30px;
     perspective: 1000px;
@@ -661,7 +657,6 @@ body {
     white-space: pre-line;
 }
 
-/* Message Actions */
 .message-actions {
     display: flex;
     gap: 10px;
@@ -821,45 +816,51 @@ body {
 }
 
 /* ==========================================
-   Responsive Design
+   إصلاح مشكلة الرسالة في الجوال
    ========================================== */
-@media (min-width: 768px) {
-    .categories-grid {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    .envelopes-grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 700px;
-        margin: 0 auto;
+@media (max-width: 768px) {
+    .envelope-animation {
+        display: none !important;
     }
     
     .modal-content {
-        max-width: 500px;
+        padding: 20px 15px !important;
+        max-height: 85vh !important;
+    }
+    
+    .letter-content h3 {
+        font-size: 20px !important;
+        margin-bottom: 15px !important;
+        color: #333 !important;
+        text-align: center !important;
+        display: block !important;
+    }
+    
+    .letter-content p {
+        font-size: 15px !important;
+        line-height: 2 !important;
+        color: #555 !important;
+        text-align: right !important;
+        white-space: pre-line !important;
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+        padding: 10px !important;
+        display: block !important;
+    }
+    
+    .envelope {
+        display: none !important;
+    }
+    
+    .message-actions {
+        margin-top: 20px !important;
     }
 }
 
-@media (max-width: 480px) {
-    .categories-grid {
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    .category-card {
-        padding: 20px 15px;
-    }
-    
-    .category-card h2 {
-        font-size: 16px;
-    }
-    
-    .splash-text h1 {
-        font-size: 26px;
-    }
-    
-    .splash-text p {
-        font-size: 18px;
+@media (min-width: 769px) {
+    .letter-content h3,
+    .letter-content p {
+        display: block;
     }
 }
 
