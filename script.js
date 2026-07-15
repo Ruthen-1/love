@@ -2,24 +2,44 @@ let messages = [];
 let favorites = JSON.parse(localStorage.getItem('fv') || '[]');
 let currentCat = '';
 
+// تحميل الرسائل
 fetch('messages.json')
-    .then(r => r.json())
-    .then(d => { messages = d.messages || d; })
-    .catch(() => {
-        messages = [
-            {id:1,color:'blue',title:'للقلب المتعب',content:'خذ نفساً عميقاً... أنت أقوى مما تظن 🤍',number:1},
-            {id:2,color:'blue',title:'للحزن',content:'الحزن زائر مؤقت... لا تجعله مقيماً في قلبك 🤍',number:2},
-            {id:3,color:'green',title:'للراحة',content:'استمتع بلحظتك... خذ كوب شاهي وارتاح 🤍',number:1},
-            {id:4,color:'green',title:'للأمل',content:'بكرة أجمل... ثق بذلك 🤍',number:2},
-            {id:5,color:'pink',title:'للحب',content:'أنت محبوب أكثر مما تتخيل 🤍',number:1},
-            {id:6,color:'pink',title:'للاشتياق',content:'الشوق يعني أن هناك من يستحق 🤍',number:2},
-            {id:7,color:'orange',title:'للقوة',content:'أنت قدها... آمن بنفسك 🤍',number:1},
-            {id:8,color:'orange',title:'للإنجاز',content:'كل خطوة توصلك لحلمك... كمل 🤍',number:2}
-        ];
+    .then(function(r) { return r.json(); })
+    .then(function(d) { 
+        messages = d.messages || d;
+        console.log('✅ تم تحميل ' + messages.length + ' رسالة');
+    })
+    .catch(function() {
+        console.log('❌ استخدام رسائل احتياطية');
+        messages = getFallback();
     });
 
+function getFallback() {
+    var msgs = [];
+    var colors = ['blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue','blue'];
+    var greens = ['green','green','green','green','green','green','green','green','green','green','green','green'];
+    var pinks = ['pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink','pink'];
+    var oranges = ['orange','orange','orange','orange','orange','orange','orange','orange','orange','orange','orange','orange'];
+    
+    var all = colors.concat(greens).concat(pinks).concat(oranges);
+    
+    for (var i = 0; i < all.length; i++) {
+        msgs.push({
+            id: i+1,
+            color: all[i],
+            title: 'رسالة ' + (i+1),
+            content: 'هذه رسالة احتياطية. تأكد من وجود ملف messages.json في نفس المجلد. 🤍',
+            number: i+1
+        });
+    }
+    return msgs;
+}
+
 function hideAll() {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove('active');
+    }
 }
 
 function goHome() {
@@ -32,23 +52,29 @@ function goEnvelopes(cat) {
     hideAll();
     document.getElementById('envelopes').classList.add('active');
     
-    const titles = { blue: '💙 إذا كان يومك ثقيل', green: '💚 إذا ودك تهدأ', pink: '💗 إذا اشتقت', orange: '🧡 إذا احتجت قوة' };
+    var titles = {
+        blue: '💙 إذا كان يومك ثقيل',
+        green: '💚 إذا ودك تهدأ',
+        pink: '💗 إذا اشتقت',
+        orange: '🧡 إذا احتجت قوة'
+    };
     document.getElementById('catTitle').textContent = titles[cat];
     
-    const grid = document.getElementById('envGrid');
-    const catMsgs = messages.filter(m => m.color === cat);
+    var catMsgs = messages.filter(function(m) { return m.color === cat; });
     
-    grid.innerHTML = catMsgs.map(m => `
-        <div class="card" onclick="openMsg(${m.id})">
-            <span>✉️</span>
-            <h3>${m.title}</h3>
-            <p>ظرف ${m.number}</p>
-        </div>
-    `).join('');
+    var html = '';
+    for (var i = 0; i < catMsgs.length; i++) {
+        var m = catMsgs[i];
+        html += '<div class="card" onclick="openMsg(' + m.id + ')"><span>✉️</span><h3>' + m.title + '</h3><p>ظرف ' + m.number + '</p></div>';
+    }
+    document.getElementById('envGrid').innerHTML = html;
 }
 
 function openMsg(id) {
-    const msg = messages.find(m => m.id === id);
+    var msg = null;
+    for (var i = 0; i < messages.length; i++) {
+        if (messages[i].id === id) { msg = messages[i]; break; }
+    }
     if (!msg) return;
     
     document.getElementById('msgTitle').textContent = msg.title;
@@ -64,12 +90,18 @@ function goFavorites() {
     hideAll();
     document.getElementById('favorites').classList.add('active');
     
-    const favMsgs = messages.filter(m => favorites.includes(m.id));
-    const list = document.getElementById('favList');
+    var favMsgs = messages.filter(function(m) { return favorites.indexOf(m.id) !== -1; });
     
-    list.innerHTML = favMsgs.length === 0 
-        ? '<div class="empty"><i class="fas fa-heart"></i><p>لا توجد رسائل مفضلة</p></div>'
-        : favMsgs.map(m => `<div class="msg-item" onclick="openMsg(${m.id})"><h3>${m.title}</h3><p>${m.content.substring(0,80)}...</p></div>`).join('');
+    var html = '';
+    if (favMsgs.length === 0) {
+        html = '<div class="empty"><i class="fas fa-heart"></i><p>لا توجد رسائل مفضلة</p></div>';
+    } else {
+        for (var i = 0; i < favMsgs.length; i++) {
+            var m = favMsgs[i];
+            html += '<div class="msg-item" onclick="openMsg(' + m.id + ')"><h3>' + m.title + '</h3><p>' + m.content.substring(0,80) + '...</p></div>';
+        }
+    }
+    document.getElementById('favList').innerHTML = html;
 }
 
 function goAbout() {
