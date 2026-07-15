@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('✅ التطبيق بدأ');
     
     try {
-        const response = await fetch('data/messages.json');
+        const response = await fetch('messages.json');
         const data = await response.json();
         messages = data.messages || data;
         console.log('✅ تم تحميل', messages.length, 'رسالة');
