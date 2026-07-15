@@ -2,7 +2,7 @@ let messages = [];
 let favorites = JSON.parse(localStorage.getItem('fv') || '[]');
 let currentCat = '';
 
-fetch('data/messages.json')
+fetch('messages.json')
     .then(r => r.json())
     .then(d => { messages = d.messages || d; })
     .catch(() => {
